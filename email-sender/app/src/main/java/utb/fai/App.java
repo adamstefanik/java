@@ -3,12 +3,23 @@ package utb.fai;
 public class App {
 
     public static void main(String[] args) {
-        // TODO: Implement input parameter processing
-        
+        if (args.length < 6) {
+            System.err.println("Not enough arguments. Usage: java -jar app.jar <host> <port> <sender> <recipient> <subject> <body>");
+            return;
+        }
+
         try {
-            EmailSender sender = new EmailSender("smtp.utb.cz", 25);
-            sender.send("you@utb.cz", "you@utb.cz", "Email from Java", "Funguje to?\nSnad...");
-            sender.close();
+            String host = args[0];
+            int port = Integer.parseInt(args[1]);
+            String sender = args[2];
+            String recipient = args[3];
+            String subject = args[4];
+            String body = args[5];
+
+            EmailSender senderObj = new EmailSender(host, port);
+            senderObj.send(sender, recipient, subject, body);
+            senderObj.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
